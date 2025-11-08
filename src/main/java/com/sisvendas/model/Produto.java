@@ -1,15 +1,21 @@
+package com.sisvendas.model;
+
+import java.util.Objects;
+
 public class Produto {
-    private String codigo;
+    private final String codigo;
     private String nome;
     private double preco;
     private int quantidade;
 
     public Produto(String codigo, String nome, double preco, int quantidadeInicial) {
-        this.codigo = codigo;
-        this.nome = nome;
+        this.codigo = Objects.requireNonNull(codigo, "codigo é obrigatório");
+        this.nome = Objects.requireNonNull(nome, "nome é obrigatório");
+        if (preco < 0) {
+            throw new IllegalArgumentException("preço não pode ser negativo");
+        }
         this.preco = preco;
         if (quantidadeInicial < 0) {
-            System.out.println("Atenção: Quantidade inicial para '" + nome + "' era negativa. Definida como 0.");
             this.quantidade = 0;
         } else {
             this.quantidade = quantidadeInicial;
@@ -33,33 +39,32 @@ public class Produto {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.nome = Objects.requireNonNull(nome, "nome é obrigatório");
     }
 
     public void setPreco(double preco) {
+        if (preco < 0) {
+            throw new IllegalArgumentException("preço não pode ser negativo");
+        }
         this.preco = preco;
     }
 
     public void adicionarQuantidade(int quantidadeAdicional) {
-        if (quantidadeAdicional > 0) {
-            this.quantidade += quantidadeAdicional;
-        } else {
-            System.out.println("Atenção: Quantidade de entrada deve ser positiva.");
+        if (quantidadeAdicional <= 0) {
+            throw new IllegalArgumentException("quantidade de entrada deve ser positiva");
         }
+        this.quantidade += quantidadeAdicional;
     }
 
     public boolean removerQuantidade(int quantidadeARemover) {
         if (quantidadeARemover <= 0) {
-            System.out.println("Atenção: Quantidade a remover deve ser positiva.");
             return false;
         }
-
         if (this.quantidade >= quantidadeARemover) {
             this.quantidade -= quantidadeARemover;
-            return true; 
-        } else {
-            return false;
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -71,4 +76,19 @@ public class Produto {
                 ", Estoque: " + quantidade + " unidades" +
                 ']';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Produto)) return false;
+        Produto produto = (Produto) o;
+        return codigo.equals(produto.codigo);
+    }
+
+    @Override
+    public int hashCode() {
+        return codigo.hashCode();
+    }
 }
+
+
