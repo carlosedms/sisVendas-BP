@@ -40,6 +40,42 @@ public class ConsoleVendasPresenter {
             System.out.println("-----------------------------");
         }
     }
+
+    public void imprimirResumoVendas(com.sisvendas.service.dto.ResumoVendas resumo) {
+        if (resumo == null || resumo.porProduto() == null || resumo.porProduto().isEmpty()) {
+            System.out.println("Sem vendas para resumir.");
+            return;
+        }
+
+        System.out.println("=== Resumo Consolidado de Vendas ===");
+
+        System.out.println("Total de Itens Vendidos (Geral): " + resumo.totalItensVendidos());
+        System.out.println("Valor Total Vendido (Geral): R$ " + String.format("%.2f", resumo.valorTotalVendido()));
+        System.out.println("\n--- Detalhes por Produto ---");
+
+        for (com.sisvendas.service.dto.ResumoPorProduto rpp : resumo.porProduto()) {
+            System.out.printf("Produto: %s (%s)\n", rpp.nome(), rpp.codigo());
+            System.out.printf(" - Qtd Vendida: %d\n", rpp.quantidadeVendida());
+            System.out.printf(" - Valor Total: R$ %.2f\n", rpp.valorTotalProduto());
+            System.out.println("-----------------------------");
+        }
+    }
+
+    public void imprimirRelatorioEstoque(java.util.List<com.sisvendas.model.Produto> produtos) {
+        System.out.println("\n=== Relatório de Estoque ===");
+        if (produtos == null || produtos.isEmpty()) {
+            System.out.println("Nenhum produto em estoque.");
+            return;
+        }
+        
+        System.out.println("-----------------------------");
+        for (com.sisvendas.model.Produto p : produtos) {
+            // Item 7: Mostrar quantidade disponível de cada produto.
+            System.out.printf("Produto: %s (%s)\n", p.getNome(), p.getCodigo());
+            System.out.printf(" - Estoque: %d unidades\n", p.getQuantidade());
+            System.out.println("-----------------------------");
+        }
+    }
 }
 
 

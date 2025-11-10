@@ -24,6 +24,11 @@ public class InMemoryProdutoRepository implements ProdutoRepository {
     public void atualizar(Produto produto) {
         storage.put(produto.getCodigo(), produto);
     }
+
+    @Override
+    public java.util.List<Produto> listarTodos() {
+        return java.util.Collections.unmodifiableList(new java.util.ArrayList<>(storage.values()));
+    }
 }
 
 

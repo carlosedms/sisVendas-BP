@@ -7,6 +7,8 @@ public interface ProdutoRepository {
     Optional<Produto> buscarPorCodigo(String codigo);
     void salvar(Produto produto);
     void atualizar(Produto produto);
+
+    java.util.List<Produto> listarTodos();
 }
 
 

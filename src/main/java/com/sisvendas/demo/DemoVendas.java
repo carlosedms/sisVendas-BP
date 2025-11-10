@@ -6,6 +6,7 @@ import com.sisvendas.model.TipoVenda;
 import com.sisvendas.repository.memory.InMemoryProdutoRepository;
 import com.sisvendas.repository.memory.InMemoryVendaRepository;
 import com.sisvendas.service.VendaService;
+import com.sisvendas.service.dto.ResumoVendas;
 import com.sisvendas.util.Par;
 import com.sisvendas.view.ConsoleVendasPresenter;
 import java.util.List;
@@ -16,6 +17,7 @@ public class DemoVendas {
         InMemoryProdutoRepository prodRepo = new InMemoryProdutoRepository();
         prodRepo.salvar(new Produto("001", "Caneta", 2.5, 100));
         prodRepo.salvar(new Produto("002", "Caderno", 15.0, 50));
+        prodRepo.salvar(new Produto("003", "Borracha", 1.75, 80));
 
         InMemoryVendaRepository vendaRepo = new InMemoryVendaRepository();
         VendaService service = new VendaService(prodRepo, vendaRepo);
@@ -34,7 +36,19 @@ public class DemoVendas {
                 Optional.of(endereco)
         );
 
+        service.registrarVenda(
+                TipoVenda.LOJA,
+                List.of(new Par<>("002", 3)),
+                Optional.empty()
+        );
+
         presenter.imprimirListaVendas(service.listarVendas());
+
+        ResumoVendas resumo = service.listarResumoVendas();
+        presenter.imprimirResumoVendas(resumo);
+
+        List<Produto> estoque = service.listarEstoque();
+        presenter.imprimirRelatorioEstoque(estoque);
     }
 }
 

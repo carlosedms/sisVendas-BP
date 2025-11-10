@@ -134,6 +134,12 @@ public class VendaService {
         porProduto.sort(Comparator.comparingInt(ResumoPorProduto::quantidadeVendida).reversed());
         return new ResumoVendas(totalItens, totalVendido, porProduto);
     }
+
+    public java.util.List<com.sisvendas.model.Produto> listarEstoque() {
+        return produtoRepository.listarTodos().stream()
+                .sorted(java.util.Comparator.comparing(com.sisvendas.model.Produto::getNome))
+                .collect(java.util.stream.Collectors.toList());
+    }
 }
 
 
