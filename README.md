@@ -1,6 +1,11 @@
 # sisVendas-BP
 Sistema de Ponto de Vendas em Java seguindo boas práticas (SOLID, camadas claras, testes).
 
+Componentes do grupo:
+- Brenda Gomes da Silva (mat. 20240021503)
+- Carlos Eduardo Miranda da Silva (mat. 20200118231)
+- Hugo José de Lima Nunes (mat. 20240062319)
+
 ## Requisitos
 - Java 17+
 - Maven
