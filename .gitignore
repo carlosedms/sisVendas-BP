@@ -46,3 +46,11 @@ Thumbs.db
 *~
 .*.sw?
 
+# Python Virtual Environment
+venv/
+__pycache__/
+*.pyc
+
+# Ferramentas de analise
+scripts/ck.jar
+
